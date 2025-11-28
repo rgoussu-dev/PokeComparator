@@ -2,11 +2,17 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "domain": [
+      "@domain/": [
+        "./projects/domain/*",
         "./dist/domain"
       ],
-      "infra": [
+      "@infra/*": [
+        "./projects/infra/*",
         "./dist/infra"
+      ],
+      "@ui": [
+        "./projects/ui/src/public-api.ts",
+        "./dist/ui"
       ],
       "ui": [
         "./dist/ui"
@@ -67,6 +73,12 @@
     },
     {
       "path": "./projects/infra/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ui/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ui/tsconfig.spec.json"
     },
     {
       "path": "./projects/ui/tsconfig.lib.json"

@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-poke-catalog',
   standalone: false,
   templateUrl: './poke-catalog.html',
-  styleUrl: './poke-catalog.scss',
+  styleUrl: './poke-catalog.css',
 })
 export class PokeCatalog {
 

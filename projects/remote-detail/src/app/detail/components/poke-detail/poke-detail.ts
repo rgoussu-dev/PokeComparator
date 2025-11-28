@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-poke-detail',
   imports: [],
   templateUrl: './poke-detail.html',
-  styleUrl: './poke-detail.scss',
+  styleUrl: './poke-detail.css',
 })
 export class PokeDetail {
   id: string;
