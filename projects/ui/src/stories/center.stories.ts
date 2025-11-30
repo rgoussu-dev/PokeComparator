@@ -39,10 +39,10 @@ export const Simple: Story = {
     render: (args) => ({
         props: args,
         template: `
-    <div style="background-color: lightgray; padding: 1rem;">
-    <pc-center [maxWidth]="maxWidth">
-         <span style="padding: 1rem; background-color: black; color: white;">Hello there</span>
-     </pc-center>
+    <div style="background-color: lightgray; padding: 2rem;">
+        <pc-center [maxWidth]="maxWidth">
+            <span style="padding: 1rem; background-color: black; color: white;">Hello there</span>
+        </pc-center>
      </div>
     `,
     }),
@@ -56,16 +56,16 @@ export const CenterText: Story = {
     render: (args) => ({
         props: args,
         template: `
-    <div style="background-color: lightgray; padding: 1rem;">
-    <pc-center [maxWidth]="maxWidth" [centerText]="centerText">
-          <span style="padding: 1rem; background-color: black; color: white;">Hello there</span>
-     </pc-center>
+    <div style="background-color: lightgray; padding: 2rem;">
+        <pc-center [maxWidth]="maxWidth" [centerText]="centerText">
+            <span style="padding: 1rem; background-color: black; color: white;">Hello there</span>
+        </pc-center>
      </div>
     `,
     }),
 };
 
-export const intrinsic: Story = {
+export const Full: Story = {
     args: {
         maxWidth: 'measure',
         intrinsic: false,
@@ -75,9 +75,9 @@ export const intrinsic: Story = {
     render: (args) => ({
         props: args,
         template: `
-    <div style="background-color: lightgray; padding: 1rem;">
+    <div style="background-color: lightgray; padding: 2rem;">
         <pc-center [maxWidth]="maxWidth" [intrinsic]="intrinsic" [gutterWidth]="gutterWidth" [centerText]="centerText">
-            <div style="padding: 1rem; background-color: black; color: white;">Hello there</div>
+            <span style="padding: 1rem; background-color: black; color: white;">Hello there</span>
         </pc-center>
     </div>
     `,

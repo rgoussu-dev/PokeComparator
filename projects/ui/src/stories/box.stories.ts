@@ -23,6 +23,10 @@ const meta: Meta<Box> = {
         control: 'color',
     },
   },
+  parameters: {
+    layout: 'centered',
+  },
+
 };
 
 export default meta;
@@ -38,9 +42,9 @@ export const Simple: Story = {
   render: (args) => ({
     props: args,
     template: `
-    <pc-box [padding]="padding" [borderWidth]="borderWidth" [backgroundColor]="backgroundColor">
-        <span>Hello there</span>
-     </pc-box>
+      <pc-box [padding]="padding" [borderWidth]="borderWidth" [backgroundColor]="backgroundColor">
+              <span>Hello, there</span>
+      </pc-box>
     `,
   }),
 };
@@ -55,9 +59,9 @@ export const Bordered: Story = {
   render: (args) => ({
     props: args,
     template: `
-    <pc-box [padding]="padding" [borderWidth]="borderWidth" [backgroundColor]="backgroundColor" [color]="color">
-        <span>Hello there</span>
-     </pc-box>
+      <pc-box [padding]="padding" [borderWidth]="borderWidth" [backgroundColor]="backgroundColor" [color]="color">
+            <span>Hello, there</span>
+      </pc-box>
     `,
   }),
 };
@@ -72,11 +76,11 @@ export const UnborderedHighContrast: Story = {
   render: (args) => ({
     props: args,
     template: `
-    <pc-box [padding]="padding" [borderWidth]="'s-5'" [backgroundColor]="'black'" [color]="'grey'">
+      <pc-box [padding]="padding" [borderWidth]="borderWidth" [backgroundColor]="'black'" [color]="'grey'">
         <pc-box [padding]="padding" [borderWidth]="borderWidth" [backgroundColor]="backgroundColor" [color]="color">
-        <span>Hello there</span>
-     </pc-box>
-    </pc-box>
+          <span>Hello, there</span>
+        </pc-box>
+      </pc-box>
     `,
   }),
 };
