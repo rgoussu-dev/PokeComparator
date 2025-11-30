@@ -53,7 +53,16 @@ export class Box implements OnInit, OnChanges {
     }
   }
 
-  updateConfigAndSignature() {
+  private updateStyle(): void {
+    if (!this.config || !this.ident) return;
+    const style = this.generateStyle(this.ident, this.config);
+    injectStyle('pc-box', this.ident, style);
+    const host = this.el.nativeElement as HTMLElement;
+    host.classList.add('box');
+    host.setAttribute('data-pc-box', this.ident);
+  }
+
+  private updateConfigAndSignature() {
     const padding = ALL_SIZES.includes(this.padding as Size) 
     ? `var(--${this.padding})` 
     : sanitizeCssValue(this.padding);
@@ -85,10 +94,11 @@ export class Box implements OnInit, OnChanges {
   private generateStyle(signature: string, config: { 
     padding: string; 
     borderWidth: string | null; 
+    borderRadius: string | null;
     backgroundColor: string; 
     color: string }): string {
 
-    const { padding, borderWidth, backgroundColor, color } = config;
+    const { padding, borderWidth, borderRadius, backgroundColor, color } = config;
     return `
       .box[data-pc-box="${signature}"] { 
           display: block;
@@ -99,18 +109,10 @@ export class Box implements OnInit, OnChanges {
           ${borderWidth != null && borderWidth !== '0' &&  `border: ${borderWidth} solid;`}
           ${borderWidth == null || borderWidth === '0' 
             ? `border: 0 solid; outline: var(--s-1) solid transparent; outline-offset: calc(var(--s-1) * -1);` : ``}  
+          ${borderRadius != null && `border-radius: ${borderRadius};`}      
       }
       .box[data-pc-box="${signature}"] * {
         color: inherit;
       }`; 
-  }
-
-  private updateStyle(): void {
-    if (!this.config || !this.ident) return;
-    const style = this.generateStyle(this.ident, this.config);
-    injectStyle('pc-box', this.ident, style);
-    const host = this.el.nativeElement as HTMLElement;
-    host.classList.add('box');
-    host.setAttribute('data-pc-box', this.ident);
   }
 }
