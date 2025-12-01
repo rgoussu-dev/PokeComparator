@@ -27,4 +27,7 @@ export * from './lib/molecule/paginated-list/paginated-list';
 export * from './lib/services/theme.service';
 export * from './lib/services/navigation.service';
 
+// Utils
+export * from './lib/utils/svg-sprite-loader';
+
 
