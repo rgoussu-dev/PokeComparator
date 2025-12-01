@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
   host: { 'data-pc-component': 'label' }
 })
 export class Label {
-  @Input() text: string = '';
-  @Input() for: string = '';
-  @Input() required: boolean = false;
+  @Input() text = '';
+  @Input() for = '';
+  @Input() required = false;
 }

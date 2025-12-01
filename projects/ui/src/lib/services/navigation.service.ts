@@ -1,4 +1,4 @@
-import { Injectable, signal, computed, effect } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 
 export interface NavLink {
   label: string;
@@ -14,16 +14,21 @@ interface GlobalNavState {
   listeners: Set<(links: NavLink[]) => void>;
 }
 
+interface WindowWithNavState extends Window {
+  [NAV_STATE_KEY]?: GlobalNavState;
+}
+
 // Initialize global state
 function getGlobalState(): GlobalNavState {
   if (typeof window !== 'undefined') {
-    if (!(window as any)[NAV_STATE_KEY]) {
-      (window as any)[NAV_STATE_KEY] = {
+    const win = window as WindowWithNavState;
+    if (!win[NAV_STATE_KEY]) {
+      win[NAV_STATE_KEY] = {
         breadcrumbs: [],
         listeners: new Set()
       };
     }
-    return (window as any)[NAV_STATE_KEY];
+    return win[NAV_STATE_KEY];
   }
   return { breadcrumbs: [], listeners: new Set() };
 }

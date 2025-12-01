@@ -142,7 +142,6 @@ describe('PaginatedList', () => {
 
 describe('PaginatedList with host', () => {
   let hostFixture: ComponentFixture<TestHostComponent>;
-  let hostComponent: TestHostComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -150,7 +149,6 @@ describe('PaginatedList with host', () => {
     }).compileComponents();
 
     hostFixture = TestBed.createComponent(TestHostComponent);
-    hostComponent = hostFixture.componentInstance;
     hostFixture.detectChanges();
   });
 

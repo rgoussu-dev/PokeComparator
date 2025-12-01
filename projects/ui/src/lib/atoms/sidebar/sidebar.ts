@@ -1,5 +1,5 @@
 
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/atom-config-helper';
 import { ALL_SIZES, Size } from '../../types/size';
 
@@ -13,14 +13,14 @@ import { ALL_SIZES, Size } from '../../types/size';
 export class Sidebar implements OnInit, OnChanges, OnDestroy {
   @Input() side: 'left' | 'right' = 'left';
   @Input() sideWidth: Size | string | null = null;
-  @Input() contentMin: string = '50%';
+  @Input() contentMin = '50%';
   @Input() space: Size | string = 's2';
-  @Input() noStretch: boolean = false;
+  @Input() noStretch = false;
 
   ident?: string;
   config: { side: string; sideWidth: string | null; contentMin: string; space: string; noStretch: boolean } | null = null;
 
-  constructor(private element: ElementRef) {}
+  private readonly element = inject(ElementRef);
 
   ngOnInit(): void {
     this.updateConfigAndSignature();
@@ -51,7 +51,7 @@ export class Sidebar implements OnInit, OnChanges, OnDestroy {
       const host = this.element.nativeElement as HTMLElement;
       host.removeAttribute('data-pc-sidebar');
       host.classList.remove('with-sidebar');
-    } catch (_e) {
+    } catch {
       console.warn('Could not clean up Sidebar attributes on destroy');
     }
   }

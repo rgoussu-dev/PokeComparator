@@ -4,7 +4,7 @@ export const sanitizeCssValue = (val: string | undefined): string => {
     return String(val).replace(/[^0-9a-zA-Z().% \-+*/]/g, '');
 };
 
-export const generateSignature = (config: {[key: string]: any}): string => {
+export const generateSignature = (config: Record<string, unknown>): string => {
     const entries = Object.entries(config)
         .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
         .map(([key, value]) => `${key}:${value}`);

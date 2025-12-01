@@ -16,17 +16,17 @@
         placeholder="Search Pokémon by name..."
         buttonIcon="search-pokeball"
         (valueChange)="onSearchValueChange($event)"
-        (search)="onSearch($event)"
+        (searchSubmit)="onSearch($event)"
     ></pc-searchbar>
     </ng-template>
 
     <ng-template #itemTemplate let-pokemon>
-    <app-pokemon-card 
+    <pc-pokemon-card 
         [pokemon]="pokemon"
         [selected]="isPokemonSelected(pokemon.id)"
         (cardClick)="onPokemonClick($event)"
         (selectionChange)="onSelectionChange($event)"
-    ></app-pokemon-card>
+    ></pc-pokemon-card>
     </ng-template>
 </pc-paginated-list>
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/atom-config-helper';
 import { ALL_SIZES, Size } from '../../types/size';
 
@@ -19,12 +19,12 @@ import { ALL_SIZES, Size } from '../../types/size';
 export class Icon implements OnInit, OnChanges, OnDestroy {
   @Input() space: Size | string | null = null;
   @Input() label: string | null = null;
-  @Input() iconHref: string = '';
+  @Input() iconHref = '';
 
   ident?: string;
   config: { space: string | null; label: string | null } | null = null;
 
-  constructor(private element: ElementRef) {}
+  private readonly element = inject(ElementRef);
 
   ngOnInit(): void {
     this.updateConfigAndSignature();
@@ -52,7 +52,7 @@ export class Icon implements OnInit, OnChanges, OnDestroy {
       const host = this.element.nativeElement as HTMLElement;
       host.removeAttribute('data-pc-icon');
       host.classList.remove('with-icon');
-    } catch (_e) {
+    } catch {
       console.warn('Could not clean up Icon attributes on destroy');
     }
   }

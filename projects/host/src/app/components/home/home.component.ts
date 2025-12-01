@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Button, Center, Cluster, Cover, Stack } from '@ui';
 
 @Component({
-  selector: 'app-home',
+  selector: 'pc-home',
   imports: [Cover, Stack, Button, Center, Cluster],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

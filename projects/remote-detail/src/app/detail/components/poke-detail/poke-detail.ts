@@ -9,12 +9,11 @@ import {
   PokemonCatalogService,
   PokemonSummary
 } from '@domain/src/public-api';
-import { Box, Center, Cluster, Stack, Frame, Button, Sidebar, Searchbar, Switcher, NavigationService } from "@ui";
-import { CommonModule } from '@angular/common';
+import { NavigationService } from "@ui";
 
 @Component({
-  selector: 'app-poke-detail',
-  imports: [CommonModule, Box, Center, Cluster, Stack, Frame, Button, Sidebar, Searchbar, Switcher],
+  selector: 'pc-poke-detail',
+  standalone: false,
   templateUrl: './poke-detail.html',
   styleUrl: './poke-detail.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -140,7 +139,7 @@ export class PokeDetail implements OnInit, OnDestroy {
     return `${kg.toFixed(1)} kg`;
   }
 
-  getStatPercentage(value: number, maxValue: number = 255): number {
+  getStatPercentage(value: number, maxValue = 255): number {
     return Math.min((value / maxValue) * 100, 100);
   }
 

@@ -5,7 +5,7 @@ const config = withModuleFederationPlugin({
   shared: {
     ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
   },
-  sharedMappings: ['shared-lib'],
+  sharedMappings: ['@ui', '@domain', '@infra'],
 });
 
 module.exports = config;

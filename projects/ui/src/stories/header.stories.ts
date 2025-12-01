@@ -1,7 +1,5 @@
 import { Meta, StoryObj } from '@storybook/angular';
 import { Header } from '../lib/molecule/header/header';
-import { sb } from 'storybook/test';
-import { splitNsName } from '@angular/compiler';
 
 const meta: Meta<Header> = {
   title: 'Molecule/Header',

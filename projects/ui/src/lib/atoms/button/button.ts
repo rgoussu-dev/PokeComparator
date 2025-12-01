@@ -8,11 +8,11 @@ import { Component, Input } from '@angular/core';
 })
 export class Button {
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
-  @Input() disabled: boolean = false;
+  @Input() disabled = false;
   @Input() variant: 'primary' | 'secondary' | 'ghost' = 'primary';
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() ariaLabel?: string;
-  @Input() fullWidth: boolean = false;
-  @Input() rounded: boolean = false;
+  @Input() fullWidth = false;
+  @Input() rounded = false;
   
 }

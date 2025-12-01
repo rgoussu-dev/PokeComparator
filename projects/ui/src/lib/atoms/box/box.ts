@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Size, ALL_SIZES } from '../../types/size';
 import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/atom-config-helper';
 
@@ -37,9 +37,7 @@ export class Box implements OnInit, OnChanges {
   ident?: string;
   config: { padding: string; borderWidth: string | null; backgroundColor: string; borderRadius: string | null; color: string } | null = null;
 
-  constructor(private el: ElementRef) {
-    
-  }
+  private readonly el = inject(ElementRef);
 
   ngOnInit(): void {
     this.updateConfigAndSignature();

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { Stack } from '../lib/atoms/stack/stack';
 
 
-type StackStoryArgs = {
+interface StackStoryArgs {
   space: 's-5' | 's-4' | 's-3' | 's-2' | 's-1' | 's0' | 's1' | 's2' | 's3' | 's4' | 's5' | 'measure';
   otherSpace?: 's-5' | 's-4' | 's-3' | 's-2' | 's-1' | 's0' | 's1' | 's2' | 's3' | 's4' | 's5' | 'measure';
   recursive?: boolean;

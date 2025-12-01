@@ -14,13 +14,23 @@ import {
     ComparisonService
 } from "@domain/src/public-api";
 import { PokeApiDetailAdapter, PokeApiAdapter } from "@infra/src/public-api";
+import { Box, Center, Cluster, Stack, Frame, Button, Sidebar, Searchbar, Switcher } from "@ui";
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule.forChild(DETAIL_ROUTES),
-        PokeDetail
+        Box,
+        Center,
+        Cluster,
+        Stack,
+        Frame,
+        Button,
+        Sidebar,
+        Searchbar,
+        Switcher
     ],
+    declarations: [PokeDetail],
     providers: [
         provideHttpClient(),
         // Infrastructure adapters bound to domain ports

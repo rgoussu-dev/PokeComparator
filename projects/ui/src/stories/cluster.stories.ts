@@ -14,7 +14,7 @@ export default {
 
 const itemStyle = `display:inline-flex; padding:8px 12px; background:#eef; border-radius:6px; border:1px solid #ccd;`;
 
-const Template = (args: any) => ({
+const Template = (args: Record<string, unknown>) => ({
   props: args,
   template: `
     <pc-cluster [space]="space" [justify]="justify" [align]="align">
@@ -46,7 +46,7 @@ export const AlignCenter = {
 };
 
 export const CustomSpace = {
-  render: (args: any) => ({
+  render: (args: Record<string, unknown>) => ({
     props: args,
     template: `
       <pc-cluster [space]="space" [justify]="justify" align="align">

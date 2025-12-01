@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Stack } from '../../atoms/stack/stack';
 import { Cluster } from '../../atoms/cluster/cluster';
 import { Button } from '../../atoms/button/button';
-import { Icon } from '../../atoms/icon/icon';
 import { Box } from '../../atoms/box/box';
 import { Grid } from '../../atoms/grid/grid';
 
@@ -31,37 +30,37 @@ export class PaginatedList<T> {
   @Input() items: T[] = [];
 
   /** Current page number (1-indexed) */
-  @Input() currentPage: number = 1;
+  @Input() currentPage = 1;
 
   /** Number of items per page */
-  @Input() pageSize: number = 10;
+  @Input() pageSize = 10;
 
   /** Total number of items (for server-side pagination) */
-  @Input() totalItems: number = 0;
+  @Input() totalItems = 0;
 
   /** Available page size options */
   @Input() pageSizeOptions: number[] = [10, 20, 50, 100];
 
   /** Whether to show the page size selector */
-  @Input() showPageSizeSelector: boolean = true;
+  @Input() showPageSizeSelector = true;
 
   /** Whether to show page numbers between prev/next */
-  @Input() showPageNumbers: boolean = true;
+  @Input() showPageNumbers = true;
 
   /** Maximum number of page buttons to show */
-  @Input() maxPageButtons: number = 5;
+  @Input() maxPageButtons = 5;
 
   /** Loading state */
-  @Input() loading: boolean = false;
+  @Input() loading = false;
 
   /** Empty state message */
-  @Input() emptyMessage: string = 'No items to display';
+  @Input() emptyMessage = 'No items to display';
 
   /** Layout mode for list items */
   @Input() layout: 'list' | 'grid' = 'list';
 
   /** Minimum item width for grid layout */
-  @Input() gridMinWidth: string = '250px';
+  @Input() gridMinWidth = '250px';
 
   /** Template for rendering each item */
   @ContentChild('itemTemplate') itemTemplate!: TemplateRef<{ $implicit: T; index: number }>;
@@ -99,7 +98,7 @@ export class PaginatedList<T> {
     const pages: number[] = [];
     const half = Math.floor(this.maxPageButtons / 2);
     let start = Math.max(1, this.currentPage - half);
-    let end = Math.min(this.totalPages, start + this.maxPageButtons - 1);
+    const end = Math.min(this.totalPages, start + this.maxPageButtons - 1);
 
     // Adjust start if we're near the end
     if (end - start + 1 < this.maxPageButtons) {

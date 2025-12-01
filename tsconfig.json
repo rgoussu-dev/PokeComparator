@@ -86,10 +86,5 @@
     {
       "path": "./projects/ui/tsconfig.spec.json"
     }
-  ],
-  "shared-lib":[
-    "projects/ui/src/public-api.ts",
-    "projects/domain/src/public-api.ts",
-    "projects/infra/src/public-api.ts"
   ]
 }

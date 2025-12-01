@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  inject,
   Input,
   OnInit,
   OnChanges,
@@ -21,11 +22,11 @@ import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/ato
   host: { 'data-pc-component': 'reel' }
 })
 export class Reel implements OnInit, OnChanges, OnDestroy {
-  @Input() itemWidth: string = 'auto';
-  @Input() space: string = 'var(--s0)';
-  @Input() height: string = 'auto';
-  @Input() noBar: boolean = false;
-  @Input() role: string = '';
+  @Input() itemWidth = 'auto';
+  @Input() space = 'var(--s0)';
+  @Input() height = 'auto';
+  @Input() noBar = false;
+  @Input() role = '';
 
   ident?: string;
   config: {
@@ -39,7 +40,7 @@ export class Reel implements OnInit, OnChanges, OnDestroy {
   private resizeObserver?: ResizeObserver;
   private mutationObserver?: MutationObserver;
 
-  constructor(private el: ElementRef) {}
+  private readonly el = inject(ElementRef);
 
   ngOnInit(): void {
     this.updateConfigAndSignature();

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/atom-config-helper';
 import { Size, ALL_SIZES } from '../../types/size';
 
@@ -10,15 +10,15 @@ import { Size, ALL_SIZES } from '../../types/size';
   host: { 'data-pc-component': 'cover' }
 })
 export class Cover implements OnInit, OnChanges, OnDestroy {
-  @Input() centered: string = 'h1';
+  @Input() centered = 'h1';
   @Input() space: Size | string = 's1';
   @Input() minHeight: Size | string = 'measure';
-  @Input() noPad: boolean = false;
+  @Input() noPad = false;
 
   ident?: string;
   config: { centered: string; space: string; minHeight: string; noPad: boolean } | null = null;
 
-  constructor(private element: ElementRef) {}
+  private readonly element = inject(ElementRef);
 
   ngOnInit(): void {
     this.updateConfigAndSignature();
@@ -48,7 +48,7 @@ export class Cover implements OnInit, OnChanges, OnDestroy {
       const host = this.element.nativeElement as HTMLElement;
       host.removeAttribute('data-pc-cover');
       host.classList.remove('cover');
-    } catch (_e) {
+    } catch {
       console.warn('Could not clean up Cover attributes on destroy');
     }
   }

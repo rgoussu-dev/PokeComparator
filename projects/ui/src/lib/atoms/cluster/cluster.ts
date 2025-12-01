@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Size, ALL_SIZES } from '../../types/size';
 import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/atom-config-helper';
 import { JustifyContent, AlignItems, ALL_JUSTIFY_CONTENT, ALL_ALIGN_ITEMS } from '../../types/alignement';
@@ -19,7 +19,7 @@ export class Cluster implements OnInit, OnChanges, OnDestroy {
   ident?: string;
   config: { space: string; justify: string; align: string } | null = null;
 
-  constructor(private element: ElementRef) {}
+  private readonly element = inject(ElementRef);
 
   ngOnInit(): void {
     this.updateConfigAndSignature();
@@ -50,7 +50,7 @@ export class Cluster implements OnInit, OnChanges, OnDestroy {
       const host = this.element.nativeElement as HTMLElement;
       host.removeAttribute('data-pc-cluster');
       host.classList.remove('cluster');
-    } catch (_e) {
+    } catch {
       console.warn('Could not clean up Cluster attributes on destroy');
     }
   }

@@ -9,10 +9,10 @@
             ariaLabel="Search input"
             (valueChange)="onInputChange($event)"
             ></pc-input>
-        <pc-button size="md" [fullWidth]="true" (click)="onSearch()" [disabled]="disabled"  variant="secondary" [rounded]="buttonLabel==null">
-                @if(buttonIcon != null){<pc-icon style="font-size:var(--s2)" [iconHref]="`#${buttonIcon}`" [label]="buttonLabel"/>}
+        <pc-button size="md" [fullWidth]="true" (click)="onSearch()" [disabled]="disabled"  variant="secondary" [rounded]="buttonLabel === null">
+                @if(buttonIcon !== null){<pc-icon style="font-size:var(--s2)" [iconHref]="`#${buttonIcon}`" [label]="buttonLabel"/>}
                 
-                @if(buttonLabel != null){<pc-label [text]="buttonLabel"/>}
+                @if(buttonLabel !== null){<pc-label [text]="buttonLabel"/>}
         </pc-button>
     </pc-cluster>
 </pc-stack>

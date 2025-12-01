@@ -5,11 +5,11 @@
     "packageManager": "npm"
   },
   "newProjectRoot": "projects",
-    "schematics": {
-        "@schematics/angular:component": {
-          "style": "css"
-        }
-      },
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "css"
+    }
+  },
   "projects": {
     "host": {
       "projectType": "application",
@@ -104,12 +104,22 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/host/**/*.ts",
+              "projects/host/**/*.html"
+            ],
+            "eslintConfig": "projects/host/eslint.config.js"
+          }
         }
       }
     },
     "remote-catalog": {
       "projectType": "application",
-        "schematics": {
+      "schematics": {
         "@schematics/angular:component": {
           "style": "css"
         }
@@ -194,12 +204,22 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/remote-catalog/**/*.ts",
+              "projects/remote-catalog/**/*.html"
+            ],
+            "eslintConfig": "projects/remote-catalog/eslint.config.js"
+          }
         }
       }
     },
     "remote-detail": {
       "projectType": "application",
-        "schematics": {
+      "schematics": {
         "@schematics/angular:component": {
           "style": "css"
         }
@@ -284,12 +304,22 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/remote-detail/**/*.ts",
+              "projects/remote-detail/**/*.html"
+            ],
+            "eslintConfig": "projects/remote-detail/eslint.config.js"
+          }
         }
       }
     },
     "remote-compare": {
       "projectType": "application",
-        "schematics": {
+      "schematics": {
         "@schematics/angular:component": {
           "style": "css"
         }
@@ -374,6 +404,16 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/remote-compare/**/*.ts",
+              "projects/remote-compare/**/*.html"
+            ],
+            "eslintConfig": "projects/remote-compare/eslint.config.js"
+          }
         }
       }
     },
@@ -399,6 +439,16 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/domain/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/domain/**/*.ts",
+              "projects/domain/**/*.html"
+            ],
+            "eslintConfig": "projects/domain/eslint.config.js"
           }
         }
       }
@@ -426,6 +476,16 @@
           "options": {
             "tsConfig": "projects/infra/tsconfig.spec.json"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/infra/**/*.ts",
+              "projects/infra/**/*.html"
+            ],
+            "eslintConfig": "projects/infra/eslint.config.js"
+          }
         }
       }
     },
@@ -435,10 +495,10 @@
       "sourceRoot": "projects/ui/src",
       "prefix": "pc",
       "schematics": {
-      "@schematics/angular:component": {
-        "style": "css"
-      }
-    },
+        "@schematics/angular:component": {
+          "style": "css"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
@@ -484,7 +544,7 @@
             "browserTarget": "ui:build",
             "compodoc": false,
             "outputDir": "dist/storybook/ui",
-            "styles":[
+            "styles": [
               "projects/ui/src/lib/global-styles.css"
             ],
             "assets": [
@@ -494,6 +554,16 @@
                 "output": "assets"
               }
             ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ui/**/*.ts",
+              "projects/ui/**/*.html"
+            ],
+            "eslintConfig": "projects/ui/eslint.config.js"
           }
         }
       }

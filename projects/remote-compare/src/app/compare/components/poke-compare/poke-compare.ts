@@ -10,7 +10,7 @@ import {
 import { NavigationService } from '@ui';
 
 @Component({
-  selector: 'app-poke-compare',
+  selector: 'pc-poke-compare',
   standalone: false,
   templateUrl: './poke-compare.html',
   styleUrl: './poke-compare.css',

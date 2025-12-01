@@ -7,11 +7,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   host: { 'data-pc-component': 'input' }
 })
 export class InputAtom {
-  @Input() value: string = '';
-  @Input() placeholder: string = '';
-  @Input() disabled: boolean = false;
-  @Input() type: string = 'text';
-  @Input() ariaLabel: string = '';
+  @Input() value = '';
+  @Input() placeholder = '';
+  @Input() disabled = false;
+  @Input() type = 'text';
+  @Input() ariaLabel = '';
   @Output() valueChange = new EventEmitter<string>();
 
   onInput(event: Event) {

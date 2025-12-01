@@ -4,7 +4,7 @@ import { Switcher } from '../lib/atoms/switcher/switcher';
 import { Size, ALL_SIZES } from '../lib/types/size';
 
 
-type SwitcherStoryArgs = {
+interface SwitcherStoryArgs {
   threshold: Size | string;
   gap: Size;
   limit: number;

@@ -12,7 +12,7 @@ interface MockItem {
 
 // Helper component for rendering items in stories
 @Component({
-  selector: 'story-item-card',
+  selector: 'pc-story-item-card',
   standalone: true,
   imports: [Box],
   template: `
@@ -76,7 +76,7 @@ export const Default: Story = {
         (pageSizeChange)="pageSizeChange($event)"
       >
         <ng-template #itemTemplate let-item>
-          <story-item-card [item]="item"></story-item-card>
+          <pc-story-item-card [item]="item"></pc-story-item-card>
         </ng-template>
       </pc-paginated-list>
     `
@@ -108,7 +108,7 @@ export const GridLayout: Story = {
         (pageChange)="pageChange($event)"
       >
         <ng-template #itemTemplate let-item>
-          <story-item-card [item]="item"></story-item-card>
+          <pc-story-item-card [item]="item"></pc-story-item-card>
         </ng-template>
       </pc-paginated-list>
     `
@@ -143,11 +143,11 @@ export const WithFilters: Story = {
             [value]="searchValue"
             placeholder="Search items..."
             buttonIcon="search-pokeball"
-            (search)="onSearch($event)"
+            (searchSubmit)="onSearch($event)"
           ></pc-searchbar>
         </ng-template>
         <ng-template #itemTemplate let-item>
-          <story-item-card [item]="item"></story-item-card>
+          <pc-story-item-card [item]="item"></pc-story-item-card>
         </ng-template>
       </pc-paginated-list>
     `
@@ -172,7 +172,7 @@ export const Loading: Story = {
         [totalItems]="totalItems"
       >
         <ng-template #itemTemplate let-item>
-          <story-item-card [item]="item"></story-item-card>
+          <pc-story-item-card [item]="item"></pc-story-item-card>
         </ng-template>
       </pc-paginated-list>
     `
@@ -196,7 +196,7 @@ export const Empty: Story = {
         [emptyMessage]="emptyMessage"
       >
         <ng-template #itemTemplate let-item>
-          <story-item-card [item]="item"></story-item-card>
+          <pc-story-item-card [item]="item"></pc-story-item-card>
         </ng-template>
       </pc-paginated-list>
     `
@@ -223,7 +223,7 @@ export const ManyPages: Story = {
         (pageChange)="pageChange($event)"
       >
         <ng-template #itemTemplate let-item>
-          <story-item-card [item]="item"></story-item-card>
+          <pc-story-item-card [item]="item"></pc-story-item-card>
         </ng-template>
       </pc-paginated-list>
     `
@@ -253,7 +253,7 @@ export const SimplePagination: Story = {
         (pageChange)="pageChange($event)"
       >
         <ng-template #itemTemplate let-item>
-          <story-item-card [item]="item"></story-item-card>
+          <pc-story-item-card [item]="item"></pc-story-item-card>
         </ng-template>
       </pc-paginated-list>
     `

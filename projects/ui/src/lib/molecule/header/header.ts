@@ -1,7 +1,11 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Label } from '../../atoms/label/label';
 import { CommonModule } from '@angular/common';
-import { Box, Cluster, Frame, ThemeToggle, Button } from '@ui';
+import { Box } from '../../atoms/box/box';
+import { Cluster } from '../../atoms/cluster/cluster';
+import { Frame } from '../../atoms/frame/frame';
+import { Button } from '../../atoms/button/button';
+import { ThemeToggle } from '../theme-toggle/theme-toggle';
 import { NavigationService } from '../../services/navigation.service';
 
 @Component({
@@ -14,7 +18,7 @@ import { NavigationService } from '../../services/navigation.service';
 export class Header {
   @Input() title: string | null = null;
   @Input() logoSrc: string | null = null; // image source for the logo
-  @Input() links: Array<{ label: string; href: string, callback: () => void }> = [];
+  @Input() links: { label: string; href: string, callback: () => void }[] = [];
   @Input() subtitle: string | null = null;
   @Output() logoClick: EventEmitter<void> = new EventEmitter<void>();
 

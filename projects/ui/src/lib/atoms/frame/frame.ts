@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { generateSignature, injectStyle } from '../helpers/atom-config-helper';
 
 const parseRatio = (ratio: string): { n: number; d: number } => {
@@ -17,12 +17,12 @@ const parseRatio = (ratio: string): { n: number; d: number } => {
   host: { 'data-pc-component': 'frame' }
 })
 export class Frame implements OnInit, OnChanges, OnDestroy {
-  @Input() ratio: string = '16:9';
+  @Input() ratio = '16:9';
 
   ident?: string;
   config: { n: number; d: number } | null = null;
 
-  constructor(private element: ElementRef) {}
+  private readonly element = inject(ElementRef);
 
   ngOnInit(): void {
     this.updateConfigAndSignature();
@@ -49,7 +49,7 @@ export class Frame implements OnInit, OnChanges, OnDestroy {
       const host = this.element.nativeElement as HTMLElement;
       host.removeAttribute('data-pc-frame');
       host.classList.remove('frame');
-    } catch (_e) {
+    } catch {
       console.warn('Could not clean up Frame attributes on destroy');
     }
   }

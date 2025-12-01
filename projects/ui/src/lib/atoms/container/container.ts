@@ -27,7 +27,7 @@
  *
  * For more, see Every Layout: https://every-layout.dev/layouts/container/
  */
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { generateSignature, injectStyle } from '../helpers/atom-config-helper';
 
 @Component({
@@ -43,7 +43,7 @@ export class Container implements OnInit, OnChanges, OnDestroy {
   ident?: string;
   config: { name?: string } | null = null;
 
-  constructor(private element: ElementRef) {}
+  private readonly element = inject(ElementRef);
 
   ngOnInit(): void {
     this.updateConfigAndSignature();
@@ -69,7 +69,7 @@ export class Container implements OnInit, OnChanges, OnDestroy {
       const host = this.element.nativeElement as HTMLElement;
       host.removeAttribute('data-pc-container');
       host.classList.remove('container');
-    } catch (_e) {
+    } catch {
       console.warn('Could not clean up Container attributes on destroy');
     }
   }

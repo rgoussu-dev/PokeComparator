@@ -6,7 +6,7 @@ import {
   PaginationParams, 
   PokemonSummary 
 } from '../models/pokemon.model';
-import { PokemonRepository, POKEMON_REPOSITORY } from '../ports/pokemon.repository';
+import { POKEMON_REPOSITORY } from '../ports/pokemon.repository';
 
 /**
  * Domain service for Pokemon catalog operations
@@ -50,7 +50,7 @@ export class PokemonCatalogService {
    * @param limit - Maximum results to return (default: 5)
    * @returns Observable of PokemonSummary array
    */
-  searchPokemon(query: string, limit: number = 5): Observable<PokemonPage> {
+  searchPokemon(query: string, limit = 5): Observable<PokemonPage> {
     return this.repository.getPokemonList(
       { page: 1, pageSize: limit },
       { search: query }

@@ -165,7 +165,7 @@
               placeholder="Search Pokémon..."
               buttonIcon="search-pokeball"
               (valueChange)="onSearchChange($event)"
-              (search)="onSearch($event)"
+              (searchSubmit)="onSearch($event)"
             ></pc-searchbar>
 
             @if (isSearching()) {

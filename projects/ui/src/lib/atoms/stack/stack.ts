@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { Size, ALL_SIZES } from '../../types/size';
 import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/atom-config-helper';
 
@@ -12,13 +12,13 @@ import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/ato
 })
 export class Stack implements OnInit, OnChanges, OnDestroy {
   @Input() space: Size | string = 's1';
-  @Input() recursive: boolean = false;
+  @Input() recursive = false;
   @Input() splitAfter: number | null = null;
 
   ident?: string;
   config: { space: string; recursive: boolean; splitAfter: number | null } | null = null;
 
-  constructor(private el: ElementRef) {}
+  private readonly el = inject(ElementRef);
 
   ngOnInit(): void {
     this.updateConfigAndSignature();
@@ -55,7 +55,7 @@ export class Stack implements OnInit, OnChanges, OnDestroy {
       const host = this.el.nativeElement as HTMLElement;
       host.removeAttribute('data-pc-stack');
       host.classList.remove('stack');
-    } catch (_e) {
+    } catch {
       console.warn('Could not clean up Stack attributes on destroy');
     }
   }

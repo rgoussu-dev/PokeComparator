@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/atom-config-helper';
 
 @Component({
@@ -9,14 +9,14 @@ import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/ato
   host: { 'data-pc-component': 'imposter' }
 })
 export class Imposter implements OnInit, OnChanges, OnDestroy {
-  @Input() breakout: boolean = false;
-  @Input() margin: string = '0';
-  @Input() fixed: boolean = false;
+  @Input() breakout = false;
+  @Input() margin = '0';
+  @Input() fixed = false;
 
   ident?: string;
   config: { breakout: boolean; margin: string; fixed: boolean } | null = null;
 
-  constructor(private element: ElementRef) {}
+  private readonly element = inject(ElementRef);
 
   ngOnInit(): void {
     this.updateConfigAndSignature();
@@ -46,13 +46,13 @@ export class Imposter implements OnInit, OnChanges, OnDestroy {
       host.removeAttribute('data-pc-imposter');
       host.classList.remove('imposter');
       host.classList.remove('contain');
-    } catch (_e) {
+    } catch {
       console.warn('Could not clean up Imposter attributes on destroy');
     }
   }
 
   private generateStyle(signature: string, config: { breakout: boolean; margin: string; fixed: boolean }): string {
-    const { breakout, margin, fixed } = config;
+    const { margin, fixed } = config;
     const position = fixed ? 'fixed' : 'absolute';
     return `
       .imposter[data-pc-imposter="${signature}"] {

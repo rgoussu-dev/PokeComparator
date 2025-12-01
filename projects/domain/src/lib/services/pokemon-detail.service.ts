@@ -1,7 +1,7 @@
 import { Injectable, InjectionToken, inject } from '@angular/core';
 import { Observable, forkJoin, map } from 'rxjs';
 import { PokemonDetail, PokemonComparison } from '../models/pokemon-detail.model';
-import { PokemonDetailRepository, POKEMON_DETAIL_REPOSITORY } from '../ports/pokemon-detail.repository';
+import { POKEMON_DETAIL_REPOSITORY } from '../ports/pokemon-detail.repository';
 import { ComparisonService } from './comparison.service';
 
 /**

@@ -8,10 +8,10 @@ import { Subject, takeUntil } from 'rxjs';
 const MAX_SELECTION = 2;
 
 @Component({
-  selector: 'app-poke-catalog',
+  selector: 'pc-poke-catalog',
+  standalone: false,
   templateUrl: './poke-catalog.html',
   styleUrl: './poke-catalog.css',
-  standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PokeCatalog implements OnInit, OnDestroy {

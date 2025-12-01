@@ -2,10 +2,10 @@ import { Component, ChangeDetectionStrategy, input, output } from '@angular/core
 import { PokemonSummary } from '@domain/src/public-api';
 
 @Component({
-  selector: 'app-pokemon-card',
+  selector: 'pc-pokemon-card',
+  standalone: false,
   templateUrl: './pokemon-card.html',
   styleUrl: './pokemon-card.css',
-  standalone: false,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PokemonCard {

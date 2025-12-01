@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ALL_SIZES, Size } from '../../types/size';
 import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/atom-config-helper';
 
@@ -31,18 +31,17 @@ export class Switcher implements OnInit, OnChanges, OnDestroy {
 
   @Input() threshold: Size | string = 's2';
   @Input() gap: Size = 's1';
-  @Input() limit: number = 4;
+  @Input() limit = 4;
   ident?: string;
   config: { threshold: string; gap: string; limit: number; } | null = null;
 
-  constructor(private element: ElementRef) {
-  }
+  private readonly element = inject(ElementRef);
   ngOnDestroy(): void {
     try {
       const host = this.element.nativeElement as HTMLElement;
       host.removeAttribute('data-pc-switcher');
       host.classList.remove('switcher');
-    } catch (_e) {
+    } catch {
       console.warn('Could not clean up Switcher attributes on destroy');
     }
   }
