@@ -23,13 +23,6 @@
   @if (!isLoading() && !error() && pokemon()) {
     
     <pc-stack space="s1">
-
-      <!-- Pokemon ID badge -->
-      <pc-box>
-        <pc-cluster justify="flex-end" align="center">
-          <span class="pokemon-number">{{ getFormattedId() }}</span>
-        </pc-cluster>
-      </pc-box>
       
       <!-- Two column layout: Detail + Search sidebar -->
     <pc-box style="min-width: 66%;">
@@ -39,18 +32,22 @@
         <pc-box padding="s2" backgroundColor="var(--color-surface)" borderRadius="s0" borderWidth="s-5">
           <pc-stack space="s1">
             
-            <!-- Pokemon Image, Name, Types -->
-            <pc-center [intrinsic]="true" gutterWidth="s1">
-              <pc-stack space="s0" align="center">
-                <pc-frame ratio="1:1" class="sprite-frame">
-                  <img 
-                    [src]="pokemon()!.spriteUrl" 
-                    [alt]="pokemon()!.name"
-                    class="pokemon-sprite"
-                  />
-                </pc-frame>
+            <!-- Pokemon Sprite + Info (side by side) -->
+            <pc-cluster space="s2" justify="center" align="center">
+              <!-- Sprite -->
+              <pc-frame ratio="1:1" class="sprite-frame">
+                <img 
+                  [src]="pokemon()!.spriteUrl" 
+                  [alt]="pokemon()!.name"
+                  class="pokemon-sprite"
+                />
+              </pc-frame>
+              
+              <!-- Number, Name, Types -->
+              <pc-stack space="s-1" align="flex-start">
+                <span class="pokemon-number">{{ getFormattedId() }}</span>
                 <h1 class="pokemon-name">{{ formatName(pokemon()!.name) }}</h1>
-                <pc-cluster space="s-2" justify="center">
+                <pc-cluster space="s-2" justify="flex-start">
                   @for (type of pokemon()!.types; track type.slot) {
                     <span class="type-badge" [attr.data-type]="type.name">
                       {{ type.name }}
@@ -58,7 +55,7 @@
                   }
                 </pc-cluster>
               </pc-stack>
-            </pc-center>
+            </pc-cluster>
 
             <!-- Physical Characteristics & Abilities (side by side) -->
             <pc-switcher threshold="20rem" space="s1" [limit]="2">
