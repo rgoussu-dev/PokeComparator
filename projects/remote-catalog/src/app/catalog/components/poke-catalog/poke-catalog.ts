@@ -98,7 +98,12 @@ export class PokeCatalog implements OnInit, OnDestroy {
   goToComparison(): void {
     const [first, second] = this.selectedPokemon();
     if (first && second) {
-      this.router.navigate(['/compare', first.id, second.id]);
+      this.router.navigate(['/compare'], {
+        queryParams: {
+          pokemon1: first.id,
+          pokemon2: second.id
+        }
+      });
     }
   }
 

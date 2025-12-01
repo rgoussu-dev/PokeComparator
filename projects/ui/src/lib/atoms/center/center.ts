@@ -10,13 +10,13 @@ import { generateSignature, injectStyle, sanitizeCssValue } from '../helpers/ato
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Center {
-  @Input() maxWidth: Size = 'measure';
+  @Input() maxWidth: Size | null = null;
   @Input() centerText: boolean = false;
   @Input() intrinsic: boolean = false;
   @Input() gutterWidth: Size | null = null;
 
   ident: string | null = null;
-  config: { maxWidth: string; centerText: boolean; intrinsic: boolean; gutterWidth: string | null; } 
+  config: { maxWidth: string  | null; centerText: boolean; intrinsic: boolean; gutterWidth: string | null; } 
   | null = null;
 
   constructor(private element: ElementRef) {
@@ -46,7 +46,7 @@ export class Center {
   }
   updateConfigAndSignature() {
     this.config = {
-      maxWidth: ALL_SIZES.includes(this.maxWidth) ? `var(--${this.maxWidth})` : sanitizeCssValue(this.maxWidth),
+      maxWidth: this.maxWidth == null ? null : ALL_SIZES.includes(this.maxWidth) ? `var(--${this.maxWidth})` : sanitizeCssValue(this.maxWidth),
       centerText: this.centerText,
       intrinsic: this.intrinsic,
       gutterWidth: this.gutterWidth == null ? null : ALL_SIZES.includes(this.gutterWidth) ? `var(--${this.gutterWidth})` : sanitizeCssValue(this.gutterWidth),
@@ -56,7 +56,7 @@ export class Center {
     this.ident = signature;
   }
 
-  private generateStyle(signature: string, config: { maxWidth: string; centerText: boolean; intrinsic: boolean; gutterWidth: string | null; }): string {
+  private generateStyle(signature: string, config: { maxWidth: string | null; centerText: boolean; intrinsic: boolean; gutterWidth: string | null; }): string {
     const { maxWidth, centerText, intrinsic, gutterWidth } = config;
     return `
     .center[data-pc-center="${signature}"] {
@@ -64,7 +64,7 @@ export class Center {
         unicode-bidi: isolate;
         box-sizing: content-box;
         margin-inline: auto;
-        max-inline-size: ${maxWidth};
+        ${maxWidth != null ? `max-inline-size: ${maxWidth};` : ''}
         ${centerText ? 'text-align: center;' : ''}
         ${intrinsic ? '    display:flex; flex-direction: column; align-items: center;' : ''}
         ${gutterWidth != null ? `padding-inline-start: ${gutterWidth}; padding-inline-end: ${gutterWidth};` : ''}

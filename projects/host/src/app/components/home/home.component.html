@@ -1,13 +1,58 @@
-<pc-center [centerText]="true">
-  <pc-cover centered=".hero-content" minHeight="80vh" [noPad]="true">
-    <div class="hero-content">
-      <pc-cluster justify="center" [align]="'center'" space="s1">
-        <pc-stack>
-          <h1>Welcome to the PokeComparator !</h1>
-          <p>Compare Them All !</p>
-        </pc-stack>
-        <img src="assets/ui/logo_colored.svg" alt="Pokemon Hero" />
-      </pc-cluster>
-    </div>
-  </pc-cover>
-</pc-center>
+<pc-cover centered=".hero-content" minHeight="90vh" [noPad]="true">
+  <pc-center class="hero-content" [centerText]="true">
+    <pc-stack space="s2">
+      <!-- Logo with animation -->
+      <pc-center>
+        <div class="hero-logo">
+          <img src="assets/ui/logo_colored.svg" alt="PokeComparator" class="logo-image" />
+        </div>
+      </pc-center>
+
+      <!-- Main heading -->
+      <pc-center>
+        <h1 class="hero-title">Welcome to <span class="highlight">PokeComparator</span></h1>
+      </pc-center>
+      
+      <!-- Subtitle -->
+      <pc-center>
+        <p class="hero-subtitle">Compare Them All!</p>
+      </pc-center>
+      
+      <!-- Description -->
+      <pc-center>
+        <p class="hero-description">
+          Explore the complete Pokémon catalog, analyze their stats, and compare your favorites side by side.
+        </p>
+      </pc-center>
+
+      <!-- CTA Button -->
+      <pc-center>
+        <pc-button 
+          variant="primary" 
+          size="lg"
+          (click)="goToCatalog()"
+        >
+          Browse Pokémon
+        </pc-button>
+      </pc-center>
+
+      <!-- Features hint -->
+      <pc-center>
+        <pc-cluster space="s2" justify="center">
+          <div class="feature">
+            <span class="feature-icon">📖</span>
+            <span class="feature-text">Browse Catalog</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">📊</span>
+            <span class="feature-text">View Stats</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">⚖️</span>
+            <span class="feature-text">Compare Pokémon</span>
+          </div>
+        </pc-cluster>
+      </pc-center>
+    </pc-stack>
+  </pc-center>
+</pc-cover>

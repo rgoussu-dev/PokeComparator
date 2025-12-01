@@ -1,1 +1,218 @@
-<p>poke-detail works! Looking at ID: {{ id }}</p>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <pc-center [intrinsic]="true">
+      <pc-stack space="s0" align="center">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading Pokémon...</p>
+      </pc-stack>
+    </pc-center>
+  }
+
+  <!-- Error State -->
+  @if (error()) {
+    <pc-center [intrinsic]="true">
+      <pc-stack space="s0" align="center">
+        <p class="error-text">{{ error() }}</p>
+        <pc-button (click)="goToCatalog()">Back to Catalog</pc-button>
+      </pc-stack>
+    </pc-center>
+  }
+
+  <!-- Pokemon Detail with Sidebar -->
+  @if (!isLoading() && !error() && pokemon()) {
+    
+    <pc-stack space="s1">
+
+      <!-- Header with back button -->
+       <pc-box>
+      <pc-cluster justify="space-between" align="center">
+        <pc-button variant="secondary" (click)="goToCatalog()">
+          ← Back to Catalog
+        </pc-button>
+        <span class="pokemon-number">{{ getFormattedId() }}</span>
+      </pc-cluster>
+    </pc-box>
+      <!-- Two column layout: Detail + Search sidebar -->
+    <pc-box style="min-width: 66%;">
+      <pc-center>
+      <pc-sidebar side="right" contentMin="33%" space="s3" >
+        <!-- Main Pokemon Detail (left/main content) -->
+        <pc-box padding="s2" backgroundColor="white" borderRadius="s0" borderWidth="s-5">
+          <pc-stack space="s1">
+            
+            <!-- Pokemon Image, Name, Types -->
+            <pc-center [intrinsic]="true" gutterWidth="s1">
+              <pc-stack space="s0" align="center">
+                <pc-frame ratio="1:1" class="sprite-frame">
+                  <img 
+                    [src]="pokemon()!.spriteUrl" 
+                    [alt]="pokemon()!.name"
+                    class="pokemon-sprite"
+                  />
+                </pc-frame>
+                <h1 class="pokemon-name">{{ formatName(pokemon()!.name) }}</h1>
+                <pc-cluster space="s-2" justify="center">
+                  @for (type of pokemon()!.types; track type.slot) {
+                    <span class="type-badge" [attr.data-type]="type.name">
+                      {{ type.name }}
+                    </span>
+                  }
+                </pc-cluster>
+              </pc-stack>
+            </pc-center>
+
+            <!-- Physical Characteristics -->
+            <pc-box padding="s1" backgroundColor="#f9f9f9" borderRadius="s-1">
+              <pc-stack space="s0">
+                <h2 class="section-title">Physical Characteristics</h2>
+                <pc-cluster space="s3" justify="center">
+                  <pc-stack space="s-3" align="center">
+                    <span class="stat-value">{{ formatHeight(pokemon()!.physical.height) }}</span>
+                    <span class="stat-label">Height</span>
+                  </pc-stack>
+                  <pc-stack space="s-3" align="center">
+                    <span class="stat-value">{{ formatWeight(pokemon()!.physical.weight) }}</span>
+                    <span class="stat-label">Weight</span>
+                  </pc-stack>
+                </pc-cluster>
+              </pc-stack>
+            </pc-box>
+
+            <!-- Base Stats -->
+            <pc-box padding="s1" backgroundColor="#f9f9f9" borderRadius="s-5">
+              <pc-stack space="s0">
+                <h2 class="section-title">Base Stats</h2>
+                <pc-stack space="s-2">
+                  <div class="stat-row">
+                    <span class="stat-name">HP</span>
+                    <div class="stat-bar-container">
+                      <div class="stat-bar" [style.width.%]="getStatPercentage(pokemon()!.stats.hp)" data-stat="hp"></div>
+                    </div>
+                    <span class="stat-value-number">{{ pokemon()!.stats.hp }}</span>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-name">Attack</span>
+                    <div class="stat-bar-container">
+                      <div class="stat-bar" [style.width.%]="getStatPercentage(pokemon()!.stats.attack)" data-stat="attack"></div>
+                    </div>
+                    <span class="stat-value-number">{{ pokemon()!.stats.attack }}</span>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-name">Defense</span>
+                    <div class="stat-bar-container">
+                      <div class="stat-bar" [style.width.%]="getStatPercentage(pokemon()!.stats.defense)" data-stat="defense"></div>
+                    </div>
+                    <span class="stat-value-number">{{ pokemon()!.stats.defense }}</span>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-name">Sp. Atk</span>
+                    <div class="stat-bar-container">
+                      <div class="stat-bar" [style.width.%]="getStatPercentage(pokemon()!.stats.specialAttack)" data-stat="special-attack"></div>
+                    </div>
+                    <span class="stat-value-number">{{ pokemon()!.stats.specialAttack }}</span>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-name">Sp. Def</span>
+                    <div class="stat-bar-container">
+                      <div class="stat-bar" [style.width.%]="getStatPercentage(pokemon()!.stats.specialDefense)" data-stat="special-defense"></div>
+                    </div>
+                    <span class="stat-value-number">{{ pokemon()!.stats.specialDefense }}</span>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-name">Speed</span>
+                    <div class="stat-bar-container">
+                      <div class="stat-bar" [style.width.%]="getStatPercentage(pokemon()!.stats.speed)" data-stat="speed"></div>
+                    </div>
+                    <span class="stat-value-number">{{ pokemon()!.stats.speed }}</span>
+                  </div>
+                  <div class="stat-row total-row">
+                    <span class="stat-name">Total</span>
+                    <div class="stat-bar-container">
+                      <div class="stat-bar" [style.width.%]="getStatPercentage(getTotalStats(), 720)" data-stat="total"></div>
+                    </div>
+                    <span class="stat-value-number total-value">{{ getTotalStats() }}</span>
+                  </div>
+                </pc-stack>
+              </pc-stack>
+            </pc-box>
+
+            <!-- Abilities -->
+            <pc-box padding="s1" backgroundColor="#f9f9f9" borderRadius="s-1">
+              <pc-stack space="s0">
+                <h2 class="section-title">Abilities</h2>
+                <pc-cluster space="s-1" justify="center">
+                  @for (ability of pokemon()!.abilities; track ability.name) {
+                    <span class="ability-badge" [class.hidden-ability]="ability.isHidden">
+                      {{ ability.name }}
+                      @if (ability.isHidden) {
+                        <span class="hidden-tag">(Hidden)</span>
+                      }
+                    </span>
+                  }
+                </pc-cluster>
+              </pc-stack>
+            </pc-box>
+
+          </pc-stack>
+        </pc-box>
+
+        <!-- Search Sidebar (right) -->
+        <pc-box padding="s1" backgroundColor="white" borderRadius="s0" borderWidth="s-5">
+          <pc-stack space="s1">
+            <h3 class="sidebar-title">Compare with...</h3>
+            
+            <pc-searchbar
+              [value]="searchQuery()"
+              placeholder="Search Pokémon..."
+              buttonIcon="search-pokeball"
+              (valueChange)="onSearchChange($event)"
+              (search)="onSearch($event)"
+            ></pc-searchbar>
+
+            @if (isSearching()) {
+              <pc-center [intrinsic]="true">
+                <p class="search-status">Searching...</p>
+              </pc-center>
+            }
+
+            @if (!isSearching() && searchResults().length > 0) {
+              <pc-stack space="s-1">
+                @for (result of searchResults(); track result.id) {
+                  <button 
+                    class="search-result-item"
+                    (click)="goToCompare(result)"
+                    [attr.aria-label]="'Compare with ' + result.name"
+                  >
+                    <pc-cluster space="s-1" align="center">
+                      <img 
+                        [src]="result.spriteUrl" 
+                        [alt]="result.name"
+                        class="search-result-sprite"
+                      />
+                      <pc-stack space="s-4">
+                        <span class="search-result-name">{{ formatName(result.name) }}</span>
+                        <span class="search-result-id">{{ formatPokemonId(result.id) }}</span>
+                      </pc-stack>
+                    </pc-cluster>
+                  </button>
+                }
+              </pc-stack>
+            }
+
+            @if (!isSearching() && searchQuery().length >= 2 && searchResults().length === 0) {
+              <pc-center [intrinsic]="true">
+                <p class="search-status">No Pokémon found</p>
+              </pc-center>
+            }
+
+            @if (searchQuery().length < 2) {
+              <p class="search-hint">Type at least 2 characters to search</p>
+            }
+          </pc-stack>
+        </pc-box>
+      </pc-sidebar>
+      </pc-center>
+      </pc-box>
+    </pc-stack>
+  }

@@ -1,6 +1,5 @@
 <pc-box 
   class="pokemon-card" 
-  [class.pokemon-card--selected]="selected()"
   [class]="'pokemon-card--' + primaryType"
   padding="s0"
   [borderWidth]="'1px'"
@@ -23,30 +22,30 @@
     </pc-cluster>
     
     <pc-center>
-      <pc-frame ratio="1:1">
-        <img 
-          [src]="pokemon().spriteUrl" 
-          [alt]="displayName + ' sprite'"
-          class="pokemon-sprite"
-          loading="lazy"
-        />
-      </pc-frame>
-    </pc-center>
-    
-    <pc-center>
       <button 
-        class="pokemon-name"
-        [class.pokemon-name--selected]="selected()"
+        class="pokemon-sprite-selector"
+        [class.pokemon-sprite-selector--selected]="selected()"
         (click)="onSelectionToggle($event)"
         (keydown.enter)="onSelectionToggle($event)"
         [attr.aria-label]="selected() ? 'Deselect ' + displayName + ' from comparison' : 'Select ' + displayName + ' for comparison'"
         [attr.aria-pressed]="selected()"
       >
-        {{ displayName }}
+        <pc-frame ratio="1:1">
+          <img 
+            [src]="pokemon().spriteUrl" 
+            [alt]="displayName + ' sprite'"
+            class="pokemon-sprite"
+            loading="lazy"
+          />
+        </pc-frame>
         @if (selected()) {
-          <span class="pokemon-name__check">✓</span>
+          <span class="pokemon-sprite-selector__check">✓</span>
         }
       </button>
+    </pc-center>
+    
+    <pc-center>
+      <span class="pokemon-name">{{ displayName }}</span>
     </pc-center>
   </pc-stack>
 </pc-box>

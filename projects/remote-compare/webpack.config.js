@@ -6,7 +6,7 @@ module.exports = withModuleFederationPlugin({
   name: 'remote-compare',
 
   exposes: {
-    './Component': './projects/remote-compare/src/app/app.ts',
+    './CompareModule': './projects/remote-compare/src/app/compare/compare.module.ts',
   },
 
   shared: {

@@ -1,1 +1,177 @@
-<p>poke-compare works!</p>
+  @if (isLoading()) {
+    <pc-center>
+      <pc-stack space="s1">
+        <p class="loading-text">Loading comparison...</p>
+      </pc-stack>
+    </pc-center>
+  } @else if (error()) {
+    <pc-center>
+      <pc-stack space="s1">
+        <p class="error-text">{{ error() }}</p>
+        <button class="btn-primary" (click)="goToCatalog()">
+          Go to Catalog
+        </button>
+      </pc-stack>
+    </pc-center>
+  } @else if (comparison()) {
+    <pc-stack space="s2">
+      <!-- Header with Pokemon sprites and names -->
+      <pc-cluster space="s2" justify="center" align="center">
+        <pc-box>
+          <button 
+            class="pokemon-header pokemon-header--clickable" 
+            [class.pokemon-header--winner]="comparison()!.overallWinner === 'pokemon1'"
+            (click)="goToDetail(comparison()!.pokemon1.id)"
+            [attr.aria-label]="'View details for ' + comparison()!.pokemon1.name"
+          >
+            <pc-stack space="s-1" align="center">
+              <pc-frame ratio="1:1" class="pokemon-sprite-frame">
+                <img [src]="comparison()!.pokemon1.spriteUrl" [alt]="comparison()!.pokemon1.name" />
+              </pc-frame>
+              <h2 class="pokemon-name">{{ formatName(comparison()!.pokemon1.name) }}</h2>
+              <pc-cluster space="s-2" justify="center">
+                @for (type of comparison()!.pokemon1.types; track type.slot) {
+                  <span class="type-badge type-badge--{{ type.name }}">{{ type.name }}</span>
+                }
+              </pc-cluster>
+              @if (comparison()!.overallWinner === 'pokemon1') {
+                <span class="winner-badge">👑 Winner</span>
+              }
+            </pc-stack>
+          </button>
+        </pc-box>
+
+        <span class="vs-badge">VS</span>
+
+        <pc-box>
+          <button 
+            class="pokemon-header pokemon-header--clickable" 
+            [class.pokemon-header--winner]="comparison()!.overallWinner === 'pokemon2'"
+            (click)="goToDetail(comparison()!.pokemon2.id)"
+            [attr.aria-label]="'View details for ' + comparison()!.pokemon2.name"
+          >
+            <pc-stack space="s-1" align="center">
+              <pc-frame ratio="1:1" class="pokemon-sprite-frame">
+                <img [src]="comparison()!.pokemon2.spriteUrl" [alt]="comparison()!.pokemon2.name" />
+              </pc-frame>
+              <h2 class="pokemon-name">{{ formatName(comparison()!.pokemon2.name) }}</h2>
+              <pc-cluster space="s-2" justify="center">
+                @for (type of comparison()!.pokemon2.types; track type.slot) {
+                  <span class="type-badge type-badge--{{ type.name }}">{{ type.name }}</span>
+                }
+              </pc-cluster>
+              @if (comparison()!.overallWinner === 'pokemon2') {
+                <span class="winner-badge">👑 Winner</span>
+              }
+            </pc-stack>
+          </button>
+        </pc-box>
+      </pc-cluster>
+
+      <!-- Score summary -->
+      <pc-center>
+        <div class="score-summary">
+          <span class="score" [class.score--winner]="comparison()!.statsWonByPokemon1 > comparison()!.statsWonByPokemon2">
+            {{ comparison()!.statsWonByPokemon1 }}
+          </span>
+          <span class="score-label">Stats Won</span>
+          <span class="score" [class.score--winner]="comparison()!.statsWonByPokemon2 > comparison()!.statsWonByPokemon1">
+            {{ comparison()!.statsWonByPokemon2 }}
+          </span>
+        </div>
+      </pc-center>
+
+      <!-- Stats comparison table -->
+      <div class="comparison-table">
+        <div class="table-header">
+          <span class="table-cell table-cell--pokemon">{{ formatName(comparison()!.pokemon1.name) }}</span>
+          <span class="table-cell table-cell--stat">Stat</span>
+          <span class="table-cell table-cell--pokemon">{{ formatName(comparison()!.pokemon2.name) }}</span>
+        </div>
+
+        @for (stat of statsArray(); track stat.name) {
+          <div class="table-row" [class.table-row--total]="stat.name === 'Total'">
+            <span class="table-cell table-cell--value" [class]="getWinnerClass(stat.winner, 'pokemon1')">
+              {{ stat.pokemon1Value }}
+              @if (stat.winner === 'pokemon1') {
+                <span class="indicator">▲</span>
+              }
+            </span>
+            <span class="table-cell table-cell--stat">
+              {{ stat.name }}
+              <div class="stat-bar-container">
+                <div class="stat-bar stat-bar--left" [style.width.%]="(stat.pokemon1Value / (stat.pokemon1Value + stat.pokemon2Value)) * 100"></div>
+                <div class="stat-bar stat-bar--right" [style.width.%]="(stat.pokemon2Value / (stat.pokemon1Value + stat.pokemon2Value)) * 100"></div>
+              </div>
+            </span>
+            <span class="table-cell table-cell--value" [class]="getWinnerClass(stat.winner, 'pokemon2')">
+              @if (stat.winner === 'pokemon2') {
+                <span class="indicator">▲</span>
+              }
+              {{ stat.pokemon2Value }}
+            </span>
+          </div>
+        }
+      </div>
+
+      <!-- Physical comparison -->
+      <div class="comparison-section">
+        <h3 class="section-title">Physical Characteristics</h3>
+        <div class="comparison-table">
+          <div class="table-row">
+            <span class="table-cell table-cell--value" [class]="getWinnerClass(comparison()!.physical.height.winner, 'pokemon1')">
+              {{ formatHeight(comparison()!.physical.height.pokemon1Value) }}
+            </span>
+            <span class="table-cell table-cell--stat">Height</span>
+            <span class="table-cell table-cell--value" [class]="getWinnerClass(comparison()!.physical.height.winner, 'pokemon2')">
+              {{ formatHeight(comparison()!.physical.height.pokemon2Value) }}
+            </span>
+          </div>
+          <div class="table-row">
+            <span class="table-cell table-cell--value" [class]="getWinnerClass(comparison()!.physical.weight.winner, 'pokemon1')">
+              {{ formatWeight(comparison()!.physical.weight.pokemon1Value) }}
+            </span>
+            <span class="table-cell table-cell--stat">Weight</span>
+            <span class="table-cell table-cell--value" [class]="getWinnerClass(comparison()!.physical.weight.winner, 'pokemon2')">
+              {{ formatWeight(comparison()!.physical.weight.pokemon2Value) }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Abilities -->
+      <div class="comparison-section">
+        <h3 class="section-title">Abilities</h3>
+        <div class="abilities-comparison">
+          <div class="abilities-list">
+            @for (ability of comparison()!.pokemon1.abilities; track ability.name) {
+              <span class="ability-badge" [class.ability-badge--hidden]="ability.isHidden">
+                {{ formatName(ability.name.replace('-', ' ')) }}
+                @if (ability.isHidden) {
+                  <span class="hidden-label">(Hidden)</span>
+                }
+              </span>
+            }
+          </div>
+          <div class="abilities-divider"></div>
+          <div class="abilities-list">
+            @for (ability of comparison()!.pokemon2.abilities; track ability.name) {
+              <span class="ability-badge" [class.ability-badge--hidden]="ability.isHidden">
+                {{ formatName(ability.name.replace('-', ' ')) }}
+                @if (ability.isHidden) {
+                  <span class="hidden-label">(Hidden)</span>
+                }
+              </span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <pc-center>
+        <button class="btn-primary" (click)="goToCatalog()">
+          Compare Different Pokémon
+        </button>
+      </pc-center>
+    </pc-stack>
+  }

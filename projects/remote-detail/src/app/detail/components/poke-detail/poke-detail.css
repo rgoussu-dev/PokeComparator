@@ -1,1 +1,232 @@
-/* component styles */
+/* Detail Page - Minimal styles, rely on layout primitives */
+
+/* Loading spinner animation */
+.loading-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 0.25rem solid #e0e0e0;
+  border-top-color: #cc0000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text,
+.error-text {
+  color: #666;
+}
+
+.error-text {
+  color: #cc0000;
+}
+
+/* Pokemon number badge */
+.pokemon-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #666;
+}
+
+/* Sprite styling */
+.sprite-frame {
+  background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+  border-radius: 50%;
+}
+
+.pokemon-sprite {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.pokemon-name {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+/* Type Badges */
+.type-badge {
+  padding: 0.4rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: white;
+  background: #777;
+}
+
+.type-badge[data-type="normal"] { background: #A8A878; }
+.type-badge[data-type="fire"] { background: #F08030; }
+.type-badge[data-type="water"] { background: #6890F0; }
+.type-badge[data-type="electric"] { background: #F8D030; color: #333; }
+.type-badge[data-type="grass"] { background: #78C850; }
+.type-badge[data-type="ice"] { background: #98D8D8; color: #333; }
+.type-badge[data-type="fighting"] { background: #C03028; }
+.type-badge[data-type="poison"] { background: #A040A0; }
+.type-badge[data-type="ground"] { background: #E0C068; color: #333; }
+.type-badge[data-type="flying"] { background: #A890F0; }
+.type-badge[data-type="psychic"] { background: #F85888; }
+.type-badge[data-type="bug"] { background: #A8B820; }
+.type-badge[data-type="rock"] { background: #B8A038; }
+.type-badge[data-type="ghost"] { background: #705898; }
+.type-badge[data-type="dragon"] { background: #7038F8; }
+.type-badge[data-type="dark"] { background: #705848; }
+.type-badge[data-type="steel"] { background: #B8B8D0; color: #333; }
+.type-badge[data-type="fairy"] { background: #EE99AC; color: #333; }
+
+/* Section titles */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+/* Physical stats text */
+.stat-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+/* Stats bars */
+.stat-row {
+  display: grid;
+  grid-template-columns: 5rem 1fr 2.5rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stat-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #666;
+  text-align: right;
+}
+
+.stat-bar-container {
+  height: 0.6rem;
+  background: #e0e0e0;
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+
+.stat-bar {
+  height: 100%;
+  border-radius: 0.3rem;
+  transition: width 0.5s ease-out;
+}
+
+.stat-bar[data-stat="hp"] { background: #ff3333; }
+.stat-bar[data-stat="attack"] { background: #f08030; }
+.stat-bar[data-stat="defense"] { background: #f8d030; }
+.stat-bar[data-stat="special-attack"] { background: #6890f0; }
+.stat-bar[data-stat="special-defense"] { background: #78c850; }
+.stat-bar[data-stat="speed"] { background: #f85888; }
+.stat-bar[data-stat="total"] { background: #7070ff; }
+
+.stat-value-number {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.total-row {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.total-value {
+  color: #5050d0;
+}
+
+/* Ability badges */
+.ability-badge {
+  padding: 0.4rem 0.8rem;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+.ability-badge.hidden-ability {
+  border-color: #a040a0;
+  background: #f9f0f9;
+}
+
+.hidden-tag {
+  font-size: 0.7rem;
+  color: #a040a0;
+  font-weight: 600;
+}
+
+/* Sidebar styles */
+.sidebar-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  color: #333;
+}
+
+.search-status {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+}
+
+.search-hint {
+  font-size: 0.8rem;
+  color: #999;
+  text-align: center;
+  margin: 0;
+}
+
+/* Search result items */
+.search-result-item {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+  text-align: left;
+}
+
+.search-result-item:hover {
+  background: #f0f0f0;
+  border-color: #cc0000;
+}
+
+.search-result-sprite {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.search-result-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.search-result-id {
+  font-size: 0.75rem;
+  color: #666;
+}
