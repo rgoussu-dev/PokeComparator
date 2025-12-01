@@ -1,19 +1,18 @@
 <pc-box [backgroundColor]="'black'" [padding]="'s1'" color="'white'">
             <pc-cluster [align]="'center'" [justify]="'space-between'" [space]="'s2'">
                 @if(logoSrc){
-                    <pc-frame class="logo" ratio="4:3" >
-                        <img [src]="logoSrc" [alt]="title" />
-                    </pc-frame>}
+                    <button 
+                        class="logo-button" 
+                        (click)="onLogoClick()" 
+                        aria-label="Go to home"
+                    >
+                        <pc-frame class="logo" ratio="4:3" >
+                            <img [src]="logoSrc" [alt]="title || 'Home'" />
+                        </pc-frame>
+                    </button>}
                 @if(title){<pc-label [text]="title"></pc-label>}
                 
-                <pc-cluster [align]="'center'" [space]="'s2'">
-                    
-                    @for(link of links; track link.href){
-                        <pc-button variant="ghost" size="md" (click)="link.callback()">
-                            <pc-label [text]="link.label" ></pc-label>
-                        </pc-button>
-                    }
+
                     <pc-theme-toggle (isDarkChange)="handleThemeChange($event)"></pc-theme-toggle>
-                </pc-cluster>
             </pc-cluster>
 </pc-box>

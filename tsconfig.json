@@ -2,13 +2,13 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@domain/": [
+      "@domain/*": [
         "./projects/domain/*",
-        "./dist/domain"
+        "./dist/domain/*"
       ],
       "@infra/*": [
         "./projects/infra/*",
-        "./dist/infra"
+        "./dist/infra/*"
       ],
       "@ui": [
         "./projects/ui/src/public-api.ts",

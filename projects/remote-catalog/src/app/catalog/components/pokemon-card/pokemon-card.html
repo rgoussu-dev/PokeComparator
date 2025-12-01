@@ -1,0 +1,52 @@
+<pc-box 
+  class="pokemon-card" 
+  [class.pokemon-card--selected]="selected()"
+  [class]="'pokemon-card--' + primaryType"
+  padding="s0"
+  [borderWidth]="'1px'"
+  (click)="onCardClick()"
+  (keydown.enter)="onCardClick()"
+  tabindex="0"
+  role="button"
+  [attr.aria-label]="'View details for ' + displayName"
+>
+  <pc-stack space="s-1">
+    <pc-cluster justify="space-between" align="center">
+      <span class="pokemon-id">{{ formattedId }}</span>
+      <pc-cluster space="s-2" align="center">
+        @for (type of pokemon().types; track type.slot) {
+          <span class="pokemon-type pokemon-type--{{ type.name }}">
+            {{ type.name }}
+          </span>
+        }
+      </pc-cluster>
+    </pc-cluster>
+    
+    <pc-center>
+      <pc-frame ratio="1:1">
+        <img 
+          [src]="pokemon().spriteUrl" 
+          [alt]="displayName + ' sprite'"
+          class="pokemon-sprite"
+          loading="lazy"
+        />
+      </pc-frame>
+    </pc-center>
+    
+    <pc-center>
+      <button 
+        class="pokemon-name"
+        [class.pokemon-name--selected]="selected()"
+        (click)="onSelectionToggle($event)"
+        (keydown.enter)="onSelectionToggle($event)"
+        [attr.aria-label]="selected() ? 'Deselect ' + displayName + ' from comparison' : 'Select ' + displayName + ' for comparison'"
+        [attr.aria-pressed]="selected()"
+      >
+        {{ displayName }}
+        @if (selected()) {
+          <span class="pokemon-name__check">✓</span>
+        }
+      </button>
+    </pc-center>
+  </pc-stack>
+</pc-box>

@@ -1,0 +1,87 @@
+:host {
+  display: block;
+  max-inline-size: none;
+}
+
+.filter-section {
+  flex: 1;
+  min-width: 200px;
+  max-width: 400px;
+}
+
+.content-wrapper {
+  position: relative;
+  transition: opacity 0.2s ease-out;
+}
+
+.content-wrapper.content-loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.loading-spinner {
+  width: var(--s2);
+  height: var(--s2);
+  border: 3px solid var(--color-border, #d1d5db);
+  border-top-color: var(--color-primary, #3b82f6);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-indicator {
+  color: var(--color-text-muted, #6b7280);
+  font-style: italic;
+}
+
+.empty-message {
+  color: var(--color-text-muted, #6b7280);
+}
+
+.pagination-info {
+  font-size: var(--s-1);
+  color: var(--color-text-muted, #6b7280);
+}
+
+.pagination-ellipsis {
+  padding: 0 var(--s-2);
+  color: var(--color-text-muted, #6b7280);
+}
+
+.page-size-select {
+  padding: var(--s-3) var(--s-1);
+  border: 1px solid var(--color-border, #d1d5db);
+  border-radius: var(--s-3);
+  background-color: var(--color-bg, #fff);
+  color: var(--color-text, #111827);
+  font-size: var(--s-1);
+  cursor: pointer;
+}
+
+.page-size-select:hover:not(:disabled) {
+  border-color: var(--color-border-hover, #9ca3af);
+}
+
+.page-size-select:focus {
+  outline: 2px solid var(--color-primary, #3b82f6);
+  outline-offset: 2px;
+}
+
+.page-size-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

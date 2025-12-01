@@ -6,8 +6,7 @@
     "@angular/core": "^21.0.0"
   },
   "dependencies": {
-    "tslib": "^2.3.0",
-    "@semantic-icons/heroicons": "0.52.0"
+    "tslib": "^2.3.0"
   },
   "sideEffects": false
 }

@@ -1,0 +1,127 @@
+<pc-stack space="s1">
+  <!-- Header: Filter + Pagination Controls -->
+  <pc-box padding="s0">
+    <pc-cluster justify="space-between" align="center" space="s1">
+      <!-- Filter Section (projected content) -->
+      <div class="filter-section">
+        @if (filterTemplate) {
+          <ng-container *ngTemplateOutlet="filterTemplate"></ng-container>
+        }
+      </div>
+
+      <!-- Pagination Controls -->
+      @if (totalItems > 0) {
+        <pc-cluster align="center" space="s0">
+          <!-- Item count info -->
+          <span class="pagination-info">
+            {{ startItem }}–{{ endItem }} of {{ totalItems }}
+          </span>
+
+          <!-- Page navigation -->
+          <pc-cluster align="center" space="s-2">
+            <!-- Page numbers -->
+            @if (showPageNumbers) {
+              @if (visiblePageNumbers[0] > 1) {
+                <pc-button
+                  variant="ghost"
+                  size="sm"
+                  [disabled]="loading"
+                  (click)="goToPage(1)"
+                >
+                  1
+                </pc-button>
+                @if (visiblePageNumbers[0] > 2) {
+                  <span class="pagination-ellipsis">…</span>
+                }
+              }
+
+              @for (page of visiblePageNumbers; track page) {
+                <pc-button
+                  [variant]="page === currentPage ? 'primary' : 'ghost'"
+                  size="md"
+                  [disabled]="loading"
+                  (click)="goToPage(page)"
+                  [ariaLabel]="'Page ' + page"
+                >
+                  {{ page }}
+                </pc-button>
+              }
+
+              @if (visiblePageNumbers[visiblePageNumbers.length - 1] < totalPages) {
+                @if (visiblePageNumbers[visiblePageNumbers.length - 1] < totalPages - 1) {
+                  <span class="pagination-ellipsis">…</span>
+                }
+                <pc-button
+                  variant="ghost"
+                  size="md"
+                  [disabled]="loading"
+                  (click)="goToPage(totalPages)"
+                >
+                  {{ totalPages }}
+                </pc-button>
+              }
+            }
+          </pc-cluster>
+
+          <!-- Page size selector -->
+          @if (showPageSizeSelector) {
+            <select
+              id="page-size-select"
+              class="page-size-select"
+              [value]="pageSize"
+              (change)="onPageSizeChange($event)"
+              [disabled]="loading"
+              aria-label="Items per page"
+            >
+              @for (size of pageSizeOptions; track size) {
+                <option [value]="size">{{ size }}</option>
+              }
+            </select>
+          }
+        </pc-cluster>
+      }
+    </pc-cluster>
+  </pc-box>
+
+  <!-- Empty State (only when not loading and no items) -->
+  @if (!loading && items.length === 0) {
+    <pc-box padding="s2">
+      <pc-cluster justify="center">
+        <span class="empty-message">{{ emptyMessage }}</span>
+      </pc-cluster>
+    </pc-box>
+  }
+
+  <!-- List Content -->
+  @if (items.length > 0) {
+    <div class="content-wrapper" [class.content-loading]="loading">
+      @if (loading) {
+        <div class="loading-overlay">
+          <span class="loading-spinner"></span>
+        </div>
+      }
+      @if (layout === 'grid') {
+        <pc-grid [min]="gridMinWidth" space="s1">
+          @for (item of items; track trackByIndex($index)) {
+            <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item, index: $index }"></ng-container>
+          }
+        </pc-grid>
+      } @else {
+        <pc-stack space="s0">
+          @for (item of items; track trackByIndex($index)) {
+            <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item, index: $index }"></ng-container>
+          }
+        </pc-stack>
+      }
+    </div>
+  }
+
+  <!-- Initial Loading State (only when no items yet) -->
+  @if (loading && items.length === 0) {
+    <pc-box padding="s2">
+      <pc-cluster justify="center">
+        <span class="loading-indicator">Loading...</span>
+      </pc-cluster>
+    </pc-box>
+  }
+</pc-stack>

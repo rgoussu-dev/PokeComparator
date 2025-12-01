@@ -1,1 +1,57 @@
-<p>poke-catalog works!</p>
+<pc-paginated-list
+    [items]="pokemonList()"
+    [currentPage]="currentPage()"
+    [pageSize]="pageSize()"
+    [totalItems]="totalItems()"
+    [loading]="isLoading()"
+    [layout]="'grid'"
+    [gridMinWidth]="'180px'"
+    [pageSizeOptions]="[10,25,50,100]"
+    emptyMessage="No Pokémon found matching your search"
+    (pageChange)="onPageChange($event)"
+>
+    <ng-template #filterTemplate>
+    <pc-searchbar
+        [value]="searchQuery()"
+        placeholder="Search Pokémon by name..."
+        buttonIcon="search-pokeball"
+        (valueChange)="onSearchValueChange($event)"
+        (search)="onSearch($event)"
+    ></pc-searchbar>
+    </ng-template>
+
+    <ng-template #itemTemplate let-pokemon>
+    <app-pokemon-card 
+        [pokemon]="pokemon"
+        [selected]="isPokemonSelected(pokemon.id)"
+        (cardClick)="onPokemonClick($event)"
+        (selectionChange)="onSelectionChange($event)"
+    ></app-pokemon-card>
+    </ng-template>
+</pc-paginated-list>
+
+@if (selectedPokemon().length > 0) {
+  <div class="selection-bar">
+    <pc-cluster justify="space-between" align="center">
+      <span class="selection-bar__text">
+        {{ selectedPokemon().length }}/2 Pokémon selected for comparison
+      </span>
+      <pc-cluster space="s0">
+        <button 
+          class="selection-bar__btn selection-bar__btn--clear"
+          (click)="clearSelection()"
+        >
+          Clear
+        </button>
+        @if (selectedPokemon().length === 2) {
+          <button 
+            class="selection-bar__btn selection-bar__btn--compare"
+            (click)="goToComparison()"
+          >
+            Compare
+          </button>
+        }
+      </pc-cluster>
+    </pc-cluster>
+  </div>
+}

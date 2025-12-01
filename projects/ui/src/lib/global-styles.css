@@ -37,7 +37,8 @@ footer,
 [data-pc-reel],
 [data-pc-container],
 [data-pc-grid],
-[data-pc-imposter] {
+[data-pc-imposter],
+[data-pc-cover] {
     max-inline-size: none;
 }
 

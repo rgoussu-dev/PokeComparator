@@ -21,5 +21,6 @@ export * from './lib/atoms/switcher/switcher';
 export * from './lib/molecule/searchbar/searchbar';
 export * from './lib/molecule/header/header';
 export * from './lib/molecule/theme-toggle/theme-toggle';
+export * from './lib/molecule/paginated-list/paginated-list';
 
 

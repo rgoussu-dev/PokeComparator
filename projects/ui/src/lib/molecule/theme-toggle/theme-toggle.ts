@@ -2,12 +2,11 @@ import { Component, EventEmitter, Input, output, Output, signal } from '@angular
 import { CommonModule } from '@angular/common';
 import { Button } from '../../atoms/button/button';
 import { Icon } from '../../atoms/icon/icon';
-import { Label } from '../../atoms/label/label';
 
 @Component({
   selector: 'pc-theme-toggle',
   standalone: true,
-  imports: [CommonModule, Button, Icon, Label],
+  imports: [CommonModule, Button, Icon],
   templateUrl: './theme-toggle.html',
   styleUrls: ['./theme-toggle.css']
 })
