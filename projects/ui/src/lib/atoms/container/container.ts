@@ -1,31 +1,89 @@
 /**
- * Container Layout (Every Layout)
+ * A container query primitive for enabling responsive design based on container width.
  *
- * The Container is a meta-layout utility for establishing CSS containers, enabling container queries for responsive design.
+ * @description
+ * The Container component establishes a CSS container query context, allowing child
+ * elements to respond to the container's dimensions rather than the viewport.
+ * This is based on the Container primitive from Every Layout and enables
+ * component-based responsive design.
  *
- * - Use container-type: inline-size to make an element a queryable container.
- * - Optionally set container-name for named containers, allowing queries from any descendant.
- * - Containers can be nested; queries target the closest ancestor by default, or a named ancestor if specified.
- * - Container queries allow styles to adapt to the container's dimensions, not just the viewport.
- * - This approach complements intrinsic layouts and provides an escape hatch for cases where intrinsic solutions aren't enough.
+ * Container queries are a powerful alternative to viewport-based media queries,
+ * allowing components to adapt based on their parent container's size. This is
+ * especially useful in component-based architectures where the same component
+ * might be used in different contexts (sidebar vs main content, for example).
  *
- * Example usage:
- *   <pc-container name="myContainer">
- *     ...
- *   </pc-container>
+ * Key features:
+ * - Establishes container query context with container-type: inline-size
+ * - Optional named containers for targeting specific ancestors
+ * - Allows nested containers (queries target closest ancestor by default)
+ * - Enables truly reusable, context-aware components
+ * - Complements intrinsic layout primitives
+ * - Performance-optimized with dynamic style generation
  *
- * CSS:
- *   .container {
- *     container-type: inline-size;
- *     container-name: myContainer;
- *   }
+ * @example
+ * Basic unnamed container:
+ * ```html
+ * <pc-container>
+ *   <div class="responsive-component">
+ *     Content that responds to container width
+ *   </div>
+ * </pc-container>
  * 
- * inside another style :
- *   @container myContainer (min-width: 400px) {
- *     ...
+ * <!-- In CSS -->
+ * @container (min-width: 400px) {
+ *   .responsive-component {
+ *     grid-template-columns: repeat(2, 1fr);
  *   }
+ * }
+ * ```
  *
- * For more, see Every Layout: https://every-layout.dev/layouts/container/
+ * @example
+ * Named container for targeted queries:
+ * ```html
+ * <pc-container name="cardContainer">
+ *   <div class="card-content">
+ *     Card that adapts to cardContainer width
+ *   </div>
+ * </pc-container>
+ * 
+ * <!-- In CSS -->
+ * @container cardContainer (min-width: 500px) {
+ *   .card-content {
+ *     display: flex;
+ *     gap: var(--s-2);
+ *   }
+ * }
+ * ```
+ *
+ * @example
+ * Nested containers:
+ * ```html
+ * <pc-container name="outer">
+ *   <pc-container name="inner">
+ *     <div class="component">
+ *       Can query both outer and inner containers
+ *     </div>
+ *   </pc-container>
+ * </pc-container>
+ * ```
+ *
+ * @usageNotes
+ * - Use for creating responsive components that work in any context
+ * - Named containers allow descendant elements at any depth to query them
+ * - Without a name, use `@container (min-width: ...)` to query closest ancestor
+ * - With a name, use `@container myName (min-width: ...)` from any descendant
+ * - Container queries work with width (inline-size), not height
+ * - Containers can be nested; each query targets the nearest matching ancestor
+ * - Particularly useful for card layouts, dashboards, and reusable components
+ * - Browser support for container queries is modern (2022+), consider fallbacks
+ * - Combine with Grid and Stack for powerful responsive layouts
+ *
+ * @see Every Layout: https://every-layout.dev/layouts/container/
+ * @see {@link Grid} for responsive grid layouts
+ * @see {@link Box} for card containers
+ * @see {@link Stack} for vertical layouts
+ *
+ * @publicApi
  */
 import { ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { generateSignature, injectStyle } from '../helpers/atom-config-helper';
@@ -38,9 +96,17 @@ import { generateSignature, injectStyle } from '../helpers/atom-config-helper';
   host: { 'data-pc-component': 'container' }
 })
 export class Container implements OnInit, OnChanges, OnDestroy {
+  /** 
+   * Optional name for this container.
+   * When provided, enables targeted container queries from any descendant using `@container name (...)`.
+   * Without a name, descendants can only query using `@container (...)` which targets the closest ancestor.
+   */
   @Input() name?: string;
 
+  /** Unique identifier for this container instance, generated from configuration. @internal */
   ident?: string;
+  
+  /** Current configuration object used for style generation. @internal */
   config: { name?: string } | null = null;
 
   private readonly element = inject(ElementRef);
@@ -58,6 +124,10 @@ export class Container implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  /**
+   * Updates configuration and generates unique signature for this container instance.
+   * @internal
+   */
   updateConfigAndSignature() {
     this.config = { name: this.name };
     const signature = `pc-container-${generateSignature(this.config)}`;
@@ -74,6 +144,14 @@ export class Container implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  /**
+   * Generates CSS styles for this container instance.
+   * Sets container-type to enable container queries.
+   * @param signature - Unique identifier for this configuration
+   * @param config - Configuration object with optional container name
+   * @returns CSS string
+   * @internal
+   */
   private generateStyle(signature: string, config: { name?: string }): string {
     const { name } = config;
     return `
