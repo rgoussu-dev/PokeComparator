@@ -202,31 +202,17 @@ ng build host --configuration production
 
 The production build uses `environment.prod.ts` with production remote URLs.
 
-## Standalone Mode
+## Standalone Mode (Planned Feature)
 
-The host can operate in **standalone mode** where it doesn't require remote modules to be running. This is useful for:
-- Local development
-- Demo purposes
-- CI/CD pipelines
+> **⚠️ Note:** Standalone mode is a planned feature and not yet implemented. See `docs/features/standalone-mode-feature-flags.md` for the implementation plan.
 
-### Enabling Standalone Mode
+The standalone mode feature would allow:
+- Individual remotes to run independently without the host
+- Feature detection to disable cross-remote navigation
+- Graceful degradation when features are unavailable
+- Mock implementations for development/testing
 
-Set the `STANDALONE_MODE` feature flag in the environment:
-
-```typescript
-export const environment = {
-  production: false,
-  standaloneMode: true, // Enable standalone
-  remotes: { /* ... */ }
-};
-```
-
-In standalone mode, the host can:
-- Show placeholder content for missing remotes
-- Use mock implementations
-- Display error states gracefully
-
-> **Note:** See `docs/features/standalone-mode-feature-flags.md` for implementation details.
+**Current behavior:** Running a remote independently (e.g., `ng serve remote-catalog`) will work for the remote's own features, but any navigation to other remotes will fail since they're not loaded.
 
 ## Shared Dependencies
 
