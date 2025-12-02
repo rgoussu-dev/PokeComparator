@@ -8,7 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "docs": "compodoc -p tsconfig.doc.json -d documentation --disableCoverage",
+    "docs:serve": "compodoc -p tsconfig.doc.json -d documentation --disableCoverage -s",
+    "docs:watch": "compodoc -p tsconfig.doc.json -d documentation --disableCoverage -s -w"
   },
   "prettier": {
     "printWidth": 100,

@@ -46,3 +46,6 @@ Thumbs.db
 *storybook.log
 storybook-static
 **/node_modules/
+
+# Compodoc generated documentation
+/documentation
