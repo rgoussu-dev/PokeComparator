@@ -118,10 +118,6 @@ graph TB
     %% Adapters call external API
     PokeApiAdapter --> PokeAPI
     PokeApiDetailAdapter --> PokeAPI
-    
-    style Domain fill:#e1f5ff,stroke:#4a90e2,stroke-width:3px
-    style "Primary Adapters (Driving)" fill:#f0e1ff,stroke:#bd10e0,stroke-width:2px
-    style "Secondary Adapters (Driven)" fill:#fff4e1,stroke:#f5a623,stroke-width:2px
 ```
 
 ## The Dependency Rule

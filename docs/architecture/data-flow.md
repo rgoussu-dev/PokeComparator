@@ -487,7 +487,7 @@ export class PokeCatalogComponent {
 ### Component State vs Service State
 
 - **Component State**: UI-specific state (loading flags, selected items, form values)
-- **Service State**: Shared state (cached data, user preferences)
+- **Service State**: Shared state managed by domain services
 
 ```typescript
 // Component state (local)
@@ -496,18 +496,25 @@ export class CatalogComponent {
   selectedPokemon = signal<PokemonSummary | null>(null);
 }
 
-// Service state (shared)
-@Injectable({ providedIn: 'root' })
+// Domain service (actual implementation)
+@Injectable()
 export class PokemonCatalogService {
-  private cache = new Map<string, PokemonPage>();
+  private readonly repository = inject(POKEMON_REPOSITORY);
   
-  loadPokemonList(offset: number, limit: number): Observable<PokemonPage> {
-    const key = `${offset}-${limit}`;
-    if (this.cache.has(key)) {
-      return of(this.cache.get(key)!);
-    }
-    return this.repository.getPokemonList(offset, limit).pipe(
-      tap(page => this.cache.set(key, page))
+  /**
+   * Retrieves a paginated list of Pokemon with optional filtering
+   */
+  getPokemonList(pagination: PaginationParams, filter?: PokemonFilter): Observable<PokemonPage> {
+    return this.repository.getPokemonList(pagination, filter);
+  }
+  
+  /**
+   * Search Pokemon by name (convenience method with default pagination)
+   */
+  searchPokemon(query: string, limit = 5): Observable<PokemonPage> {
+    return this.repository.getPokemonList(
+      { page: 1, pageSize: limit },
+      { search: query }
     );
   }
 }

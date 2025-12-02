@@ -260,12 +260,6 @@ graph TB
     CompareComponents -.uses.-> UI
     
     Domain -.uses.-> Infra
-    
-    style "Host Application :4200" fill:#4a90e2,color:#fff
-    style "Remote Catalog :4201" fill:#7ed321,color:#000
-    style "Remote Detail :4202" fill:#f5a623,color:#000
-    style "Remote Compare :4203" fill:#bd10e0,color:#fff
-    style "Shared Libraries" fill:#50e3c2,color:#000
 ```
 
 ## Shared Dependencies
