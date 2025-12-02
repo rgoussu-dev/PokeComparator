@@ -6,6 +6,8 @@
 
 A modern Pokemon comparison application built with Angular 21, showcasing microfrontend architecture with Module Federation and hexagonal architecture principles.
 
+You can find more about the building journey that was taken by the author [here](./A_WORD_ON_METHOD.md)
+
 ## 📋 Table of Contents
 
 - [About](#about)
