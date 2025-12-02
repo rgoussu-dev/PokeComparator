@@ -6,8 +6,6 @@
   "disableInternal": true,
   "disableLifeCycleHooks": false,
   "disableRoutesGraph": false,
-  "disableCoverage": false,
-  "coverageTest": 70,
-  "coverageTestThresholdFail": false,
+  "disableCoverage": true,
   "customFavicon": ""
 }
