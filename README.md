@@ -263,9 +263,11 @@ npm test -- --coverage
 
 ### Testing Strategy
 
-- **Domain Layer**: High coverage of business logic and services (use cases)
-- **Components**: Testing user interactions and component behavior
-- **Adapters**: Testing data transformation and API integration logic
+> **Note**: As of now, testing has been done primarily manually. Automated test coverage is minimal and will be expanded in future iterations.
+
+- **Domain Layer**: Business logic and services (use cases) - automated tests to be added
+- **Components**: User interactions and component behavior - primarily manual testing
+- **Adapters**: Data transformation and API integration - primarily manual testing
 - **End-to-End**: Manual testing of integrated microfrontends
 
 ## 📚 Documentation
